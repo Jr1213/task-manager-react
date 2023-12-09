@@ -10,14 +10,14 @@ const UpdateTask = ({ match }) => {
   });
 
   useEffect(() => {
-    const fetchTaskDetails = async () => {
+    const fetchTaskDetails = async (e) => {
       try {
         const response = await axios.get(`https://task.ecmpp.com/api/task/Show/${match.params.id}`);
         setTask(response.data);
         setFormData({
           content: response.data.content,
           title: response.data.title,
-          image: null, // Assuming you want to update the image as well
+          image: response.data.image, // Assuming you want to update the image as well
         });
       } catch (error) {
         console.error('Error fetching task details:', error);
@@ -35,25 +35,12 @@ const UpdateTask = ({ match }) => {
     setFormData({ ...formData, image: e.target.files[0] });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const formDataToSend = new FormData();
-      formDataToSend.append('content', formData.content);
-      formDataToSend.append('title', formData.title);
-      formDataToSend.append('image', formData.image);
-
-      const response = await axios.post(`https://task.ecmpp.com/api/task/edit/${match.params.id}`, formDataToSend);
-      // Handle success or show error messages
-    } catch (error) {
-      // Handle error
-    }
-  };
+  
 
   return (
     <div>
       <h2>Update Task</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={task}>
         <label>
           Content:
           <textarea name="content" value={formData.content} onChange={handleInputChange} />

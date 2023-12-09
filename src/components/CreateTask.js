@@ -6,7 +6,7 @@ const CreateTask = () => {
   const [formData, setFormData] = useState({
     content: "",
     title: "",
-    username: "bedo-2003",
+    username: "",
     image: null,
   });
 
@@ -18,28 +18,24 @@ const CreateTask = () => {
     setFormData({ ...formData, image: e.target.files[0] });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("content", formData.content);
-      formDataToSend.append("title", formData.title);
-      formDataToSend.append("username", formData.username);
-      formDataToSend.append("image", formData.image);
-
-      const response = await axios.post(
-        "https://task.ecmpp.com/api/task/add",
-        formDataToSend
-      );
-    } catch (error) {
-      // Handle error
-    }
+  let config = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: 'https://task.ecmpp.com/api/task/add',
+    headers: { }
   };
-
+  
+  axios.request(config)
+  .then((response) => {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch((error) => {
+    console.log(error);
+  });
   return (
     <div className="create-task">
       <h2>Create Task</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={config}>
         <label>
           Content:
           <textarea
