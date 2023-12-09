@@ -51,11 +51,13 @@ const TaskList = () => {
               placeholder="search..."
             />
           </div>
-          <div className="lg:ml-40 ml-10 space-x-8">
-            <button className="bg-green-500 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
-              Create
-            </button>
-          </div>
+          <Link to={"create"}>
+            <div className="lg:ml-40 ml-10 space-x-8">
+              <button className="bg-green-500 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
+                Add Task
+              </button>
+            </div>
+          </Link>
         </div>
       </div>
       <div>
@@ -131,7 +133,6 @@ const TaskList = () => {
                       </button>{" "}
                     </td>
                   </Link>
-
                   <td className=" py-5 border-b border-gray-200 bg-white text-sm">
                     <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                       <button
@@ -156,57 +157,62 @@ const TaskList = () => {
                       </button>
                     </span>
                   </td>
-                  <td className=" py-5 border-b border-gray-200 bg-white text-sm">
-                    <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                      <button
-                        type="button"
-                        class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                      >
-                        <svg
-                          class="h-8 w-8 text-white"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
+                  <Link to={"details"}>
+                    <td className=" py-5 border-b border-gray-200 bg-white text-sm">
+                      <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                        <button
+                          type="button"
+                          class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
                         >
-                          <path
+                          <svg
+                            class="h-8 w-8 text-white"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                            />
+                          </svg>
+                        </button>
+                      </span>
+                    </td>
+                  </Link>
+
+                  <Link to={"create"}>
+                    <td className=" py-5 border-b border-gray-200 bg-white text-sm">
+                      <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                        <button
+                          type="button"
+                          class="text-white bg-gradient-to-r from-slate-400 via-slate-500 to-slate-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-slate-300 dark:focus:ring-slate-800 shadow-lg shadow-slate-500/50 dark:shadow-lg dark:shadow-slate-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                        >
+                          <svg
+                            class="h-8 w-8 text-white"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                          />
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                          />
-                        </svg>
-                      </button>
-                    </span>
-                  </td>
-                  <td className=" py-5 border-b border-gray-200 bg-white text-sm">
-                    <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                      <button
-                        type="button"
-                        class="text-white bg-gradient-to-r from-slate-400 via-slate-500 to-slate-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-slate-300 dark:focus:ring-slate-800 shadow-lg shadow-slate-500/50 dark:shadow-lg dark:shadow-slate-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                      >
-                        <svg
-                          class="h-8 w-8 text-white"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          {" "}
-                          <circle cx="12" cy="12" r="10" />{" "}
-                          <line x1="12" y1="8" x2="12" y2="16" />{" "}
-                          <line x1="8" y1="12" x2="16" y2="12" />
-                        </svg>
-                      </button>
-                    </span>
-                  </td>
+                          >
+                            {" "}
+                            <circle cx="12" cy="12" r="10" />{" "}
+                            <line x1="12" y1="8" x2="12" y2="16" />{" "}
+                            <line x1="8" y1="12" x2="16" y2="12" />
+                          </svg>
+                        </button>
+                      </span>
+                    </td>
+                  </Link>
                 </tr>
               </tbody>
             </table>

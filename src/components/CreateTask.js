@@ -6,8 +6,8 @@ const CreateTask = () => {
   const [formData, setFormData] = useState({
     content: "",
     title: "",
-    username: "",
-    image: null,
+    username: "bedo-2003", // Set a default or get it dynamically
+    image: "",
   });
 
   const handleInputChange = (e) => {
@@ -18,24 +18,41 @@ const CreateTask = () => {
     setFormData({ ...formData, image: e.target.files[0] });
   };
 
-  let config = {
-    method: 'post',
-    maxBodyLength: Infinity,
-    url: 'https://task.ecmpp.com/api/task/add',
-    headers: { }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append("content", formData.content);
+      formDataToSend.append("title", formData.title);
+      formDataToSend.append("username", formData.username);
+      formDataToSend.append("image", formData.image);
+
+      const response = await axios.post(
+        "https://task.ecmpp.com/api/task/add",
+        formDataToSend
+      );
+
+      // Assuming your API response contains some data, you might want to handle it
+      console.log("Task created successfully:", response.data);
+
+      // Clear the form after successful submission
+      setFormData({
+        content: "",
+        title: "",
+        username: "bedo-2003", // Set a default or get it dynamically
+        image: "",
+      });
+
+    } catch (error) {
+      // Handle error or show error messages
+      console.error("Error creating task:", error);
+    }
   };
-  
-  axios.request(config)
-  .then((response) => {
-    console.log(JSON.stringify(response.data));
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+
   return (
     <div className="create-task">
       <h2>Create Task</h2>
-      <form onSubmit={config}>
+      <form onSubmit={handleSubmit}>
         <label>
           Content:
           <textarea
@@ -51,6 +68,17 @@ const CreateTask = () => {
             name="title"
             value={formData.title}
             onChange={handleInputChange}
+          />
+        </label>
+        {/* You can hide or disable the username field if it's not editable */}
+        <label>
+          Username:
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleInputChange}
+            disabled // If it's not editable
           />
         </label>
         <label>
