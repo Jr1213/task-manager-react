@@ -1,46 +1,33 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
-const TaskDetails = ({ match }) => {
-  const [task, setTask] = useState({});
+const TaskDetails = () => {
+  let { taskid } = useParams();
+  const [task, setTask] = useState(null);
 
   useEffect(() => {
-    const fetchTaskDetails = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `https://task.ecmpp.com/api/task/Show/${match.params.id}`
-        );
+        const response = await axios.get(`https://task.ecmpp.com/api/task/Show/${taskid}`);
         setTask(response.data);
       } catch (error) {
-        console.error("Error fetching task details:", error);
+        console.error(error);
       }
     };
 
-    fetchTaskDetails();
-  }, [match.params.id]);
+    fetchData();
+  }, [taskid]); // Make sure to include taskid as a dependency
 
   return (
     <div>
-      <h2>Task Details</h2>
-      <p>
-        <strong>Title:</strong> {task.title}
-      </p>
-      <p>
-        <strong>Content:</strong> {task.content}
-      </p>
-      <p>
-        <strong>Username:</strong> {task.username}
-      </p>
-      {task.image && (
+      {task ? (
         <div>
-          <p>
-            <strong>Image:</strong>
-          </p>
-          <img
-            src={`https://task.ecmpp.com/storage/${task.image}`}
-            alt="Task Image"
-          />
+          <h1>Task Title: {task.title}</h1>
+          {/* Display other task details as needed */}
         </div>
+      ) : (
+        <p>Loading...</p>
       )}
     </div>
   );

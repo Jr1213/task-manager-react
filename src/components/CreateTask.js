@@ -6,8 +6,8 @@ const CreateTask = () => {
   const [formData, setFormData] = useState({
     content: "",
     title: "",
-    username: "bedo-2003", // Set a default or get it dynamically
-    image: "",
+    username: "",
+    image: null,
   });
 
   const handleInputChange = (e) => {
@@ -18,35 +18,24 @@ const CreateTask = () => {
     setFormData({ ...formData, image: e.target.files[0] });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("content", formData.content);
-      formDataToSend.append("title", formData.title);
-      formDataToSend.append("username", formData.username);
-      formDataToSend.append("image", formData.image);
+  const handleSubmit = (e) => {
+    e.preventDefault(); // منع إعادة تحميل الصفحة
 
-      const response = await axios.post(
-        "https://task.ecmpp.com/api/task/add",
-        formDataToSend
-      );
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'https://task.ecmpp.com/api/task/add',
+      headers: { },
+      data: formData, // أرسل البيانات من النموذج
+    };
 
-      // Assuming your API response contains some data, you might want to handle it
-      console.log("Task created successfully:", response.data);
-
-      // Clear the form after successful submission
-      setFormData({
-        content: "",
-        title: "",
-        username: "bedo-2003", // Set a default or get it dynamically
-        image: "",
+    axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
       });
-
-    } catch (error) {
-      // Handle error or show error messages
-      console.error("Error creating task:", error);
-    }
   };
 
   return (
@@ -68,17 +57,6 @@ const CreateTask = () => {
             name="title"
             value={formData.title}
             onChange={handleInputChange}
-          />
-        </label>
-        {/* You can hide or disable the username field if it's not editable */}
-        <label>
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleInputChange}
-            disabled // If it's not editable
           />
         </label>
         <label>

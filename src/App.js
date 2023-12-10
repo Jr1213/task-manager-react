@@ -8,10 +8,10 @@ import TaskDetails from "./components/TaskDetails";
 function App() {
   return (
     <Routes>
-      <Route path="/" Component={TaskList} />
-      <Route path="create" component={CreateTask} />
-      <Route path="update/:id" component={UpdateTask} />
-      <Route path="details" component={TaskDetails} />
+      <Route path="/" element={<TaskList />} />
+      <Route path="/create" element={<CreateTask />} />
+      <Route path="/update/:taskid" element={<UpdateTask />} />
+      <Route path="/details/:taskid" element={<TaskDetails />} />
     </Routes>
   );
 }
