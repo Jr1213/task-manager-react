@@ -111,7 +111,7 @@ const TaskList = () => {
                           {task.content}
                         </p>
                       </td>
-                      <Link to={`/update/ ${task.id}`}>
+                      <Link to={`/update/${task.id}`}>
                         <td className=" py-5 border-b border-gray-200 bg-white text-sm">
                           <button
                             type="button"
