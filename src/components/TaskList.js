@@ -20,7 +20,15 @@ const TaskList = () => {
 
     fetchData();
   }, []); // Empty dependency array to run the effect only once when the component mounts
-
+  const handleDelete = async (taskId) => {
+    try {
+      await axios.delete(`https://task.ecmpp.com/api/task/remove/${taskId}`);
+      // Filter out the deleted task from the state
+      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
+  };
   return (
     <>
       <div className="bg-white p-8 rounded-md w-3/4 m-auto">
@@ -30,7 +38,6 @@ const TaskList = () => {
             <span className="text-xs">All task item</span>
           </div>
           <div className="flex items-center justify-between">
-           
             <Link to={"create"}>
               <div className="lg:ml-40 ml-10 space-x-8">
                 <button className="bg-green-500 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
@@ -60,9 +67,7 @@ const TaskList = () => {
                 </thead>
                 {tasks.map((task) => {
                   return (
-                    
-                    
-                    <tbody>
+                    <tbody key={task.id}>
                       <tr>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                           <div className="flex items-center">
@@ -87,36 +92,36 @@ const TaskList = () => {
                         </td>
                         <td>
                           <div
-                            class="inline-flex rounded-md shadow-sm "
+                            className="inline-flex rounded-md shadow-sm "
                             role="group"
                           >
                             <Link to={"create"}>
                               <button
                                 type="button"
-                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-1  focus:text-blue-700 "
+                                className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-1  focus:text-blue-700 "
                               >
                                 Add
                               </button>
                             </Link>
                             <Link to={`/details/${task.id}`}>
-
-                            <button
-                              type="button"
-                              class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-1  focus:text-blue-700 "
-                            >
-                              Veiw
-                            </button>
+                              <button
+                                type="button"
+                                className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-1  focus:text-blue-700 "
+                              >
+                                Veiw
+                              </button>
                             </Link>
                             <button
+                              onClick={() => handleDelete(task.id)}
                               type="button"
-                              class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-1  focus:text-blue-700 "
+                              className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-1  focus:text-blue-700 "
                             >
                               Delete
                             </button>
                             <Link to={`/update/${task.id}`}>
                               <button
                                 type="button"
-                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-1  focus:text-blue-700 "
+                                className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-1  focus:text-blue-700 "
                               >
                                 Edit
                               </button>
