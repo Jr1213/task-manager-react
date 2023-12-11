@@ -4,7 +4,6 @@ import axios from "axios";
 export default function CreateTask() {
   const [formData, setFormData] = useState({
     Content: "",
-    Username: "bedo-2003",
     Title: "", // Assuming this is a default value
     Image: null,
   });
@@ -18,16 +17,25 @@ export default function CreateTask() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    const requst = new FormData();
+    requst.append('image',formData.Image)
+    requst.append('content',formData.Content)
+    requst.append('title',formData.Title)
+    requst.append('username',"bedo-2003")
 
+    for (const key in formData) {
+      requst.append(key, formData[key]);
+    }
     let config = {
       method: "POST",
       maxBodyLength: Infinity,
       url: "https://task.ecmpp.com/api/task/add",
-      headers: {},
-      data: formData, // Send form data as the request payload
-      
+      // headers: {
+      //   "Content-Type": "multipart/form-data",
+      // },
+      data: requst, // Send form data as the request payload
     };
-
+    console.log(config);
     axios
       .request(config)
       .then((response) => {
@@ -51,6 +59,7 @@ export default function CreateTask() {
       };
 
       reader.readAsDataURL(file);
+      setFormData((prevData) => ({ ...prevData, Image: file }));
     }
   };
 
@@ -77,7 +86,7 @@ export default function CreateTask() {
           />
         </div>
 
-        <div className="mb-6">
+        {/* <div className="mb-6">
           <label
             htmlFor="Username"
             className="block mb-2 text-sm font-medium text-gray-900"
@@ -94,7 +103,7 @@ export default function CreateTask() {
             onChange={handleInputChange}
             readOnly
           />
-        </div>
+        </div> */}
 
         <div className="mb-6">
           <label
